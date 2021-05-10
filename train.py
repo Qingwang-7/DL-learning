@@ -31,8 +31,8 @@ def main():
     #            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
     net = LeNet()
-    loss_function = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(net.parameters(), lr=0.001)
+    loss_function = nn.CrossEntropyLoss() #定义损失函数
+    optimizer = optim.Adam(net.parameters(), lr=0.001)  #定义优化器
 
     for epoch in range(5):  # loop over the dataset multiple times
 
@@ -42,7 +42,7 @@ def main():
             inputs, labels = data
 
             # zero the parameter gradients
-            optimizer.zero_grad()
+            optimizer.zero_grad() #历史损失函数清零
             # forward + backward + optimize
             outputs = net(inputs)
             loss = loss_function(outputs, labels)
