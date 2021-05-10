@@ -2,7 +2,9 @@ import torch
 import torchvision
 import torch.nn as nn
 from model import LeNet
+import matplotlib.pyplot as plt
 import torch.optim as optim
+import numpy as np
 import torchvision.transforms as transforms
 
 
@@ -14,9 +16,9 @@ def main():
     # 50000张训练图片
     # 第一次使用时要将download设置为True才会自动去下载数据集
     train_set = torchvision.datasets.CIFAR10(root='./data', train=True,
-                                             download=True, transform=transform)# transform函数会预处理
+                                             download=False, transform=transform)# transform函数会预处理
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=36,
-                                               shuffle=True, num_workers=0)
+                                               shuffle=False, num_workers=0)
 
     # 10000张验证图片
     # 第一次使用时要将download设置为True才会自动去下载数据集
@@ -27,8 +29,21 @@ def main():
     val_data_iter = iter(val_loader)
     val_image, val_label = val_data_iter.next()
 
-    # classes = ('plane', 'car', 'bird', 'cat',
-    #            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+    classes = ('plane', 'car', 'bird', 'cat',
+                'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+    # def imshow(img):
+    #     img = img / 2 + 0.5  # unnormalize
+    #     npimg = img.numpy()
+    #     plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    #     plt.show()
+    #
+    # dataiter = iter(train_loader)
+    # images, labels = dataiter.next()
+    #
+    # # 显示图片
+    # imshow(torchvision.utils.make_grid(images))
+    # # 打印图片标签
+    # print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
     net = LeNet()
     loss_function = nn.CrossEntropyLoss() #定义损失函数
@@ -51,7 +66,7 @@ def main():
 
             # print statistics
             running_loss += loss.item()
-            if step % 500 == 499:  # print every 500 mini-batches
+            if step % 500 == 499:  # print every 500 mini-batches2
                 with torch.no_grad():
                     outputs = net(val_image)  # [batch, 10]
                     predict_y = torch.max(outputs, dim=1)[1]
