@@ -1,10 +1,8 @@
 import torch
 import torchvision
 import torch.nn as nn
-from model import LeNet
-import matplotlib.pyplot as plt
+from Lenet.model import LeNet
 import torch.optim as optim
-import numpy as np
 import torchvision.transforms as transforms
 
 
